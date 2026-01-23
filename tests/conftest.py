@@ -4,7 +4,7 @@ from src.task import Product, Category
 
 
 @pytest.fixture
-def products():
+def product():
     return Product(
         name="Product 1",
         description="Product 2",
