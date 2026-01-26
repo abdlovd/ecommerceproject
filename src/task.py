@@ -1,7 +1,7 @@
 class Product:
     name: str
     description: str
-    price: int
+    price: float
     quantity: int
 
     def __init__(self, name, description, price, quantity):
@@ -11,7 +11,11 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, name, description, price, quantity, products):
+    def new_product(cls, data, products):
+        name = data["name"]
+        description = data["description"]
+        price = data["price"]
+        quantity = data["quantity"]
         for product in products:
             if product.name == name:
                 product.quantity += quantity
@@ -26,15 +30,15 @@ class Product:
 
     @price.setter
     def price(self, new_price):
-        if self.__price <= 0:
+        if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
         elif self.__price > new_price:
             print(f"Подтверждаете понижение цены? Введите 'y' если да, 'n' если нет")
             answer = input()
             if answer == "y":
                 self.__price = new_price
-            return
-        self.__price = new_price
+        else:
+            self.__price = new_price
 
 class Category:
     name: str
@@ -52,6 +56,8 @@ class Category:
 
     def add_product(self, name, description, price, quantity):
         self.__products.append(Product(name, description, price, quantity))
+        Category.total_products += 1
+
 
     @property
     def products(self):
@@ -61,5 +67,6 @@ class Category:
     def products_ (self):
         products_str = " "
         for product in self.__products:
-            products_str += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+            products_str.join(product)
+            print(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n")
         return products_str

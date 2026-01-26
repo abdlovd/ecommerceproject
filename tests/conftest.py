@@ -8,8 +8,8 @@ def product():
     return Product(
         name="Product 1",
         description="Product 2",
-        price="100",
-        quantity=10
+        price = 100.00,
+        quantity = 10
     )
 
 @pytest.fixture
