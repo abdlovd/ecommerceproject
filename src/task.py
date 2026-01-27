@@ -11,18 +11,8 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, data, products):
-        name = data["name"]
-        description = data["description"]
-        price = data["price"]
-        quantity = data["quantity"]
-        for product in products:
-            if product.name == name:
-                product.quantity += quantity
-                if price > product.price:
-                    product.price = price
-                return product
-        return cls(name, description, price, quantity)
+    def new_product(cls, data):
+        return cls(**data)
 
     @property
     def price(self):
@@ -45,28 +35,28 @@ class Category:
     description: str
     products: list
     total_categories = 0
-    total_products = 0
+    product_count = 0
 
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
         self.__products = products if products else []
         Category.total_categories += 1
-        Category.total_products += len(products)
+        Category.product_count += len(products)
 
-    def add_product(self, name, description, price, quantity):
-        self.__products.append(Product(name, description, price, quantity))
-        Category.total_products += 1
-
+    def add_product(self, product: Product):
+        for d in self.__products:
+            if d.name == product.name:
+                d.quantity += product.quantity
+                if product.price > d.price:
+                    d.price = product.price
+                    break
+        self.__products.append(product)
+        Category.product_count += 1
 
     @property
     def products(self):
-        return self.__products
-
-    @property
-    def products_ (self):
-        products_str = " "
+        products_str = ""
         for product in self.__products:
-            products_str.join(product)
-            print(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n")
+            products_str += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return products_str

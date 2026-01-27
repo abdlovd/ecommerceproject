@@ -1,19 +1,22 @@
-from src.task import Product
+from src.task import Product, Category
 
 
 def test_task_product(product) -> None:
     assert product.name == "Product 1"
     assert product.description == "Product 2"
-    assert product.price == "100"
+    assert product.price == 100.00
     assert product.quantity == 10
 
 def test_task_category(category) -> None:
     assert category.name == "Product 3"
     assert category.description == "Product 4"
-    assert category.products == "Product 5"
+    assert category.products == ''
 
-def test_add_products(category) -> None:
-    assert category.products == 'Product 5'
+def test_add_product(category, product) -> None:
+    category.add_product(product)
+    product.price = 150
+    category.add_product(product)
+    assert category.products == 'Product 1, 150 руб. Остаток: 20 шт.\nProduct 1, 150 руб. Остаток: 20 шт.\n'
 
 def test_new_products():
     new_product = Product(name="Product 1", description="Product 2", price=100.00, quantity=10)

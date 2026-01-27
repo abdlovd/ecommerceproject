@@ -36,6 +36,9 @@ dev = [
     "openpyxl (>=3.1.5,<4.0.0)",
     "requests (>=2.32.5,<3.0.0)"
 ]
+test = [
+    "pytest-cov (>=7.0.0,<8.0.0)"
+]
 
 [tool.black]
 line-length = 119
