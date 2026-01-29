@@ -33,8 +33,14 @@ def test_price(capsys, product):
     p.price = 120
     assert p.price == 120
 
-def test_str(category):
+def test_str_category(category):
     assert str(category) == "Product 3, количество продуктов: 0 шт."
 
 def test_product_add(add_prices, add_prices2) -> None:
     assert add_prices + add_prices2 == 1334000.0
+
+def test_str_product(product):
+    assert str(product)== "Product 1, 100.0 руб. Остаток: 10 шт."
+
+def test_category_iter(test_category_iteration):
+    assert test_category_iteration.index == -1
