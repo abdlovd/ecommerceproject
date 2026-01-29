@@ -32,3 +32,9 @@ def test_price(capsys, product):
     assert message.out.strip () == "Цена не должна быть нулевая или отрицательная"
     p.price = 120
     assert p.price == 120
+
+def test_str(category):
+    assert str(category) == "Product 3, количество продуктов: 0 шт."
+
+def test_product_add(add_prices, add_prices2) -> None:
+    assert add_prices + add_prices2 == 1334000.0

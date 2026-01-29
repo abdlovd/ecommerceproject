@@ -1,6 +1,8 @@
 import pytest
 
 from src.task import Product, Category
+from src.task_iteration import CategoryIteration
+
 
 @pytest.fixture
 def read_json_file():
@@ -43,6 +45,7 @@ def read_json_file():
         }
     ]
 
+
 @pytest.fixture
 def product():
     return Product(
@@ -59,3 +62,16 @@ def category():
         description="Product 4",
         products= [],
     )
+
+
+@pytest.fixture
+def add_prices():
+    return Product("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера",180000.0,5)
+
+@pytest.fixture
+def add_prices2():
+    return Product("Xiaomi Redmi Note 11","1024GB, Синий",31000.0,14)
+
+@pytest.fixture
+def test_category_iteration(category):
+    return CategoryIteration(category)

@@ -18,6 +18,9 @@ class Product:
     def price(self):
         return self.__price
 
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
     @price.setter
     def price(self, new_price):
         if new_price <= 0:
@@ -29,6 +32,9 @@ class Product:
                 self.__price = new_price
         else:
             self.__price = new_price
+
+    def __add__(self, other):
+        return self.price*self.quantity + other.price*other.quantity
 
 class Category:
     name: str
@@ -60,3 +66,9 @@ class Category:
         for product in self.__products:
             products_str += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return products_str
+
+    def __str__(self):
+        count_product = 0
+        for product in self.__products:
+            count_product += product.quantity
+        return f"{self.name}, количество продуктов: {count_product} шт."
