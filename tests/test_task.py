@@ -1,4 +1,5 @@
 from src.task import Product, Category
+import pytest
 
 
 def test_task_product(product) -> None:
@@ -42,5 +43,8 @@ def test_product_add(add_prices, add_prices2) -> None:
 def test_str_product(product):
     assert str(product)== "Product 1, 100.0 руб. Остаток: 10 шт."
 
-def test_category_iter(test_category_iteration):
-    assert test_category_iteration.index == -1
+def test_category_iter(category_it):
+    iter(category_it)
+    assert category_it.index == 0
+    with pytest.raises(StopIteration):
+        next(category_it)

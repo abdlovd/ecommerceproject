@@ -73,5 +73,5 @@ def add_prices2():
     return Product("Xiaomi Redmi Note 11","1024GB, Синий",31000.0,14)
 
 @pytest.fixture
-def test_category_iteration(category):
+def category_it(category):
     return CategoryIteration(category)
