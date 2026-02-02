@@ -11,13 +11,20 @@ def test_task_product(product) -> None:
 def test_task_category(category) -> None:
     assert category.name == "Product 3"
     assert category.description == "Product 4"
-    assert category.products == ''
+    assert category.products == []
 
 def test_add_product(category, product) -> None:
     category.add_product(product)
     product.price = 150
     category.add_product(product)
-    assert category.products == 'Product 1, 150 руб. Остаток: 20 шт.\nProduct 1, 150 руб. Остаток: 20 шт.\n'
+    assert category.products[0].name == 'Product 1'
+    assert category.products[1].name == 'Product 1'
+
+def test_add_product_error(product_smartphone1, category) -> None:
+    with pytest.raises(TypeError):
+        category.add_product(1)
+    with pytest.raises(TypeError):
+        result = product_smartphone1 + 1
 
 def test_new_products():
     new_product = Product(name="Product 1", description="Product 2", price=100.00, quantity=10)

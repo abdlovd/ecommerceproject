@@ -21,6 +21,9 @@ class Product:
     def __str__(self):
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
+    def __repr__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
     @price.setter
     def price(self, new_price):
         if new_price <= 0:
@@ -34,7 +37,10 @@ class Product:
             self.__price = new_price
 
     def __add__(self, other):
-        return self.price*self.quantity + other.price*other.quantity
+        if type(self) == type(other):
+            return self.price*self.quantity + other.price*other.quantity
+        raise TypeError
+
 
 class Category:
     name: str
@@ -51,14 +57,17 @@ class Category:
         Category.product_count += len(products)
 
     def add_product(self, product: Product):
-        for d in self.__products:
-            if d.name == product.name:
-                d.quantity += product.quantity
-                if product.price > d.price:
-                    d.price = product.price
-                    break
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
+            for d in self.__products:
+                if d.name == product.name:
+                    d.quantity += product.quantity
+                    if product.price > d.price:
+                        d.price = product.price
+                        break
+        else:
+            raise TypeError
 
     @property
     def products(self):

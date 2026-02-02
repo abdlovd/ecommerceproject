@@ -2,6 +2,7 @@ import pytest
 
 from src.task import Product, Category
 from src.task_iteration import CategoryIteration
+from src.category_product import Smartphone, LawnGrass
 
 
 @pytest.fixture
@@ -75,3 +76,19 @@ def add_prices2():
 @pytest.fixture
 def category_it(category):
     return CategoryIteration(category)
+
+@pytest.fixture
+def product_smartphone1():
+    return Smartphone("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера",180000.0,5, "fast", "new", 5, "pink")
+
+@pytest.fixture
+def product_smartphone2():
+    return Smartphone("Samsung", "256GB, Серый цвет",170000.0,2, "slow", "old", 7, "red")
+
+@pytest.fixture
+def product_lawngrass1():
+    return LawnGrass("Xiaomi Redmi Note 11","1024GB, Синий",31000.0,14, 5, "France", "blue")
+
+@pytest.fixture
+def product_lawngrass2():
+    return LawnGrass("Xiaomi Redmi Note 12","1024GB, Синий",33000.0,10, 2, "Italy", "green")
