@@ -12,6 +12,8 @@ class Product:
 
     @classmethod
     def new_product(cls, data):
+        """создать класс-метод new_product, который будет принимать на вход параметры
+         товара в словаре и возвращать созданный объект класса Product."""
         return cls(**data)
 
     @property
@@ -19,6 +21,8 @@ class Product:
         return self.__price
 
     def __str__(self):
+        """вернуть возможность просмотра товаров, нужно реализовать геттер,
+        который будет выводить список товаров в виде строк"""
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
     def __repr__(self):
@@ -26,9 +30,13 @@ class Product:
 
     @price.setter
     def price(self, new_price):
+        """В сеттере реализуйте проверку: в случае если цена равна или ниже нуля"""
         if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
         elif self.__price > new_price:
+            """В случае если цена товара понижается, добавить логику подтверждения пользователем 
+            вручную через ввод y (значит yes) или n (значит no) для согласия понизить цену 
+            или для отмены действия соответственно."""
             print(f"Подтверждаете понижение цены? Введите 'y' если да, 'n' если нет")
             answer = input()
             if answer == "y":
@@ -37,6 +45,7 @@ class Product:
             self.__price = new_price
 
     def __add__(self, other):
+        """ итоге у вас получалась полная стоимость всех товаров на складе."""
         if type(self) == type(other):
             return self.price*self.quantity + other.price*other.quantity
         raise TypeError
@@ -47,7 +56,9 @@ class Category:
     description: str
     products: list
     total_categories = 0
+    """Количество категории"""
     product_count = 0
+    """Количество товаров"""
 
     def __init__(self, name, description, products):
         self.name = name
@@ -57,6 +68,9 @@ class Category:
         Category.product_count += len(products)
 
     def add_product(self, product: Product):
+        """Для добавления товаров в категорию реализуйте специальный метод add_product()
+        в классе Category, в который нужно передавать объект класса Product
+        и уже его записывать в приватный атрибут списка товаров."""
         if isinstance(product, Product):
             self.__products.append(product)
             Category.product_count += 1
