@@ -30,17 +30,14 @@ class Product(BaseProduct, PrintMixin):
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
     def __repr__(self):
-        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+        return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
 
     @price.setter
     def price(self, new_price):
         """В сеттере реализуйте проверку: в случае если цена равна или ниже нуля"""
         if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
-        elif self.__price > new_price:
-            """В случае если цена товара понижается, добавить логику подтверждения пользователем 
-            вручную через ввод y (значит yes) или n (значит no) для согласия понизить цену 
-            или для отмены действия соответственно."""
+        elif new_price < self.__price:
             print(f"Подтверждаете понижение цены? Введите 'y' если да, 'n' если нет")
             answer = input()
             if answer == "y":
@@ -49,7 +46,7 @@ class Product(BaseProduct, PrintMixin):
             self.__price = new_price
 
     def __add__(self, other):
-        """ итоге у вас получалась полная стоимость всех товаров на складе."""
+        """ В Итоге у вас получалась полная стоимость всех товаров на складе."""
         if type(self) == type(other):
             return self.price*self.quantity + other.price*other.quantity
         raise TypeError
@@ -59,7 +56,7 @@ class Category:
     name: str
     description: str
     products: list
-    total_categories = 0
+    category_count = 0
     """Количество категории"""
     product_count = 0
     """Количество товаров"""
@@ -68,7 +65,7 @@ class Category:
         self.name = name
         self.description = description
         self.__products = products if products else []
-        Category.total_categories += 1
+        Category.category_count += 1
         Category.product_count += len(products)
 
     def add_product(self, product: Product):

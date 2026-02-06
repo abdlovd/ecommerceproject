@@ -52,7 +52,7 @@ def product():
     return Product(
         name="Product 1",
         description="Product 2",
-        price = 100.00,
+        price = 100.0,
         quantity = 10
     )
 
