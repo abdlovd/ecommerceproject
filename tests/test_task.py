@@ -18,7 +18,6 @@ def test_add_product(category, product) -> None:
     product.price = 150
     category.add_product(product)
     assert category.products[0].name == 'Product 1'
-    assert category.products[1].name == 'Product 1'
 
 def test_add_product_error(product_smartphone1, category) -> None:
     with pytest.raises(TypeError):

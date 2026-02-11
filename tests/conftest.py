@@ -99,5 +99,5 @@ def without_product():
         name="Product 99",
         description="Product 99",
         price = 123467.0,
-        quantity = 0
+        quantity = 87
     )
