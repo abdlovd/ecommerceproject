@@ -11,7 +11,10 @@ class Product(BaseProduct, PrintMixin):
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity = quantity
+        if quantity > 0:
+            self.quantity = quantity
+        else:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__()
 
     @classmethod
@@ -51,6 +54,9 @@ class Product(BaseProduct, PrintMixin):
             return self.price*self.quantity + other.price*other.quantity
         raise TypeError
 
+    def average_price(self):
+        return 0.0
+
 
 class Category:
     name: str
@@ -64,25 +70,24 @@ class Category:
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
-        self.__products = products if products else []
+        self.__products = products or []
         Category.category_count += 1
-        Category.product_count += len(products)
+        Category.product_count += len(self.__products)
 
     def add_product(self, product: Product):
         """Для добавления товаров в категорию реализуйте специальный метод add_product()
         в классе Category, в который нужно передавать объект класса Product
         и уже его записывать в приватный атрибут списка товаров."""
-        if isinstance(product, Product):
-            self.__products.append(product)
-            Category.product_count += 1
-            for d in self.__products:
-                if d.name == product.name:
-                    d.quantity += product.quantity
-                    if product.price > d.price:
-                        d.price = product.price
-                        break
-        else:
-            raise TypeError
+        if not isinstance(product, Product):
+            raise TypeError ("Можно добавлять только объекты Product")
+        for d in self.__products:
+            if d.name == product.name:
+                d.quantity += product.quantity
+                if product.price > d.price:
+                    d.price = product.price
+                return
+        self.__products.append(product)
+        Category.product_count += 1
 
     @property
     def products(self):
@@ -93,3 +98,11 @@ class Category:
         for product in self.__products:
             count_product += product.quantity
         return f"{self.name}, количество продуктов: {count_product} шт."
+
+    def average_price(self):
+        try:
+            total_sum = sum(p.price * p.quantity for p in self.__products)
+            total_quantity = sum(p.quantity for p in self.__products)
+            return total_sum / total_quantity
+        except ZeroDivisionError:
+            return 0

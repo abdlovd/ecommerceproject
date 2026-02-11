@@ -92,3 +92,12 @@ def product_lawngrass1():
 @pytest.fixture
 def product_lawngrass2():
     return LawnGrass("Xiaomi Redmi Note 12","1024GB, Синий",33000.0,10, 2, "Italy", "green")
+
+@pytest.fixture
+def without_product():
+    return Product(
+        name="Product 99",
+        description="Product 99",
+        price = 123467.0,
+        quantity = 0
+    )

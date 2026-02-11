@@ -55,3 +55,16 @@ def test_category_iter(category_it):
     assert category_it.index == 0
     with pytest.raises(StopIteration):
         next(category_it)
+
+def test_average_price(category, without_product):
+    assert category.average_price() == 0
+    assert without_product.average_price() == 0.0
+
+def test_product_exceptiom(product):
+    with pytest.raises(ValueError):
+        Product(
+            name="кирпич",
+            description="новый",
+            price=0,
+            quantity=0
+        )
